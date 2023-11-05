@@ -1,0 +1,7 @@
+persistence true
+persistence_location "{{ data_directory }}"
+log_dest file "{{ logs_directory }}/mosquitto.log"
+
+listener 1883
+password_file /mosquitto/data/mosquitto.password_file
+acl_file /mosquitto/data/mosquitto.aclfile
