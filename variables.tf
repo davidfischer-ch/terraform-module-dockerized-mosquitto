@@ -34,7 +34,8 @@ variable "log_types" {
       [
         "debug",
         "error",
-        "warning,notice",
+        "warning",
+        "notice",
         "information",
         "subscribe",
         "unsubscribe",
@@ -43,7 +44,7 @@ variable "log_types" {
         "all"
       ]
     ) == []
-    error_message = "Log types should be one or more of `debug`, `error`, `warning,notice`, `information`, `subscribe`, `unsubscribe`, `websockets`, `none`, `all`."
+    error_message = "Log types should be one or more of `debug`, `error`, `warning`, `notice`, `information`, `subscribe`, `unsubscribe`, `websockets`, `none`, `all`."
   }
 }
 
