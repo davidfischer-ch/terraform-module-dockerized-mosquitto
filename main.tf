@@ -8,6 +8,7 @@ resource "docker_container" "app" {
   }
 
   entrypoint = ["/bin/sh", "${local.container_config_directory}/entrypoint.sh"]
+  command    = ["mosquitto", "-c", "${local.container_config_directory}/mosquitto.conf"]
   image      = var.image_id
   name       = var.identifier
 
