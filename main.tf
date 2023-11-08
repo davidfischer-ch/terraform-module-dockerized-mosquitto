@@ -27,6 +27,20 @@ resource "docker_container" "server" {
   env = [
   ]
 
+  ports {
+    internal = "1883"
+    external = var.listener_port
+    ip       = "0.0.0.0"
+    protocol = "tcp"
+  }
+
+  ports {
+    internal = "9001"
+    external = var.websocket_port
+    ip       = "0.0.0.0"
+    protocol = "tcp"
+  }
+
   volumes {
     container_path = "${local.container_config_directory}/mosquitto.conf"
     host_path      = local_sensitive_file.main_config.filename

@@ -38,8 +38,7 @@ variable "log_level" {
 # Authentication
 
 variable "username" {
-  type      = string
-  sensitive = false
+  type = string
 }
 
 variable "password" {
@@ -55,21 +54,13 @@ variable "network_id" {
 }
 
 variable "listener_port" {
-  type    = number
-  default = 1883
-
-  validation {
-    condition     = var.listener_port == 1883
-    error_message = "Having `listener_port` different than 1883 is not yet implemented."
-  }
+  type        = number
+  default     = 1883
+  description = "Bind the MQTT server's listener port."
 }
 
-variable "other_port" {
-  type    = number
-  default = 1883
-
-  validation {
-    condition     = var.other_port == 1883
-    error_message = "Having `other_port` different than 1883 is not yet implemented."
-  }
+variable "websocket_port" {
+  type        = number
+  default     = 9001
+  description = "Bind the MQTT server's websocket port."
 }
