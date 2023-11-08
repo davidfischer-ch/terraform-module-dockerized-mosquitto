@@ -24,14 +24,26 @@ variable "data_directory" {
 
 # Logging
 
-# TODO
-variable "log_level" {
-  type    = string
-  default = "warning"
+variable "log_types" {
+  type    = list(string)
+  default = ["error", "warning", "notice", "information"]
 
   validation {
-    condition     = contains(["debug", "verbose", "notice", "warning"], var.log_level)
-    error_message = "Log level should be one of `debug`, `verbose`, `notice`, `warning`"
+    condition = length(var.log_types) >= 1 && setsubtract(
+      var.log_types,
+      [
+        "debug",
+        "error",
+        "warning,notice",
+        "information",
+        "subscribe",
+        "unsubscribe",
+        "websockets",
+        "none",
+        "all"
+      ]
+    ) == []
+    error_message = "Log types should be one or more of `debug`, `error`, `warning,notice`, `information`, `subscribe`, `unsubscribe`, `websockets`, `none`, `all`."
   }
 }
 

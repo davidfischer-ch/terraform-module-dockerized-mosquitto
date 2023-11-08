@@ -9,5 +9,6 @@ locals {
   forced_context = {
     data_directory = local.container_data_directory
     logs_directory = local.container_logs_directory
+    log_types      = var.log_types
   }
 }
