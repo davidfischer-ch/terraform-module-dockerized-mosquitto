@@ -24,12 +24,7 @@ variable "data_directory" {
 
 # Daemon
 
-variable "app_user_id" {
-  type    = number
-  default = 1883
-}
-
-variable "app_group_id" {
+variable "app_uid" {
   type    = number
   default = 1883
 }

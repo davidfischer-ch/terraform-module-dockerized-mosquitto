@@ -41,7 +41,7 @@ resource "docker_container" "app" {
     protocol = "tcp"
   }
 
-  user = "${linux_user.app.name}:${linux_group.app.name}"
+  user = linux_user.app.name
 
   volumes {
     container_path = "${local.container_config_directory}/mosquitto.conf"
