@@ -6,9 +6,17 @@ locals {
   host_data_directory        = "${var.data_directory}/data"
   host_logs_directory        = "${var.data_directory}/logs"
 
+  container_password_file = "/tmp/password"
+
+  env = {
+    PASSWORD = var.password
+  }
+
   forced_context = {
-    data_directory = local.container_data_directory
-    logs_directory = local.container_logs_directory
-    log_types      = var.log_types
+    password_file    = local.container_password_file
+    config_directory = local.container_config_directory
+    data_directory   = local.container_data_directory
+    logs_directory   = local.container_logs_directory
+    log_types        = var.log_types
   }
 }

@@ -1,7 +1,9 @@
 persistence true
 persistence_location {{ data_directory }}
+
 log_dest file {{ logs_directory }}/mosquitto.log
 log_type {{ log_types|join(' ') }}
 
-password_file {{ data_directory }}/mosquitto.password_file
-acl_file {{ data_directory }}/mosquitto.aclfile
+listener 1883
+password_file {{ password_file }}
+# acl_file {{ config_directory }}/mosquitto.aclfile

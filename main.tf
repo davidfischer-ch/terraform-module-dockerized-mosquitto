@@ -2,12 +2,14 @@ resource "docker_container" "app" {
 
   lifecycle {
     replace_triggered_by = [
+      local_file.entrypoint,
       local_sensitive_file.main_config
     ]
   }
 
-  image = var.image_id
-  name  = var.identifier
+  entrypoint = ["/bin/bash", "${local.container_config_directory}/entrypoint.sh"]
+  image      = var.image_id
+  name       = var.identifier
 
   must_run = var.enabled
   start    = var.enabled
@@ -15,8 +17,6 @@ resource "docker_container" "app" {
   # wait   = true
 
   # shm_size = 256 # MB
-
-  # command = ["mosquitto", "-c", "${local.container_config_directory}/mosquitto.conf"]
 
   hostname = var.identifier
 
@@ -42,6 +42,12 @@ resource "docker_container" "app" {
   }
 
   user = linux_user.app.name
+
+  volumes {
+    container_path = "${local.container_config_directory}/entrypoint.sh"
+    host_path      = local_file.entrypoint.filename
+    read_only      = true
+  }
 
   volumes {
     container_path = "${local.container_config_directory}/mosquitto.conf"
