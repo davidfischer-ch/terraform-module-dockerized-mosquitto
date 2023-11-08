@@ -29,7 +29,7 @@ variable "log_types" {
   default = ["error", "warning", "notice", "information"]
 
   validation {
-    condition = length(var.log_types) >= 1 && setsubtract(
+    condition = length(var.log_types) >= 1 && length(setsubtract(
       var.log_types,
       [
         "debug",
@@ -43,7 +43,7 @@ variable "log_types" {
         "none",
         "all"
       ]
-    ) == []
+    )) == 0
     error_message = "Log types should be one or more of `debug`, `error`, `warning`, `notice`, `information`, `subscribe`, `unsubscribe`, `websockets`, `none`, `all`."
   }
 }
