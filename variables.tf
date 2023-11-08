@@ -29,6 +29,11 @@ variable "app_uid" {
   default = 1883
 }
 
+variable "app_gid" {
+  type    = number
+  default = 1883
+}
+
 # Logging
 
 variable "log_types" {
