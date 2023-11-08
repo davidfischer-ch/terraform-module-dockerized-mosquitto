@@ -60,4 +60,11 @@ resource "docker_container" "app" {
     host_path      = local.host_logs_directory
     read_only      = false
   }
+
+  provisioner "local-exec" {
+    command = <<EOT
+      chown "${linux_user.app.name}:${linux_group.app.name}" "${local.host_data_directory}"
+      chown "${linux_user.app.name}:${linux_group.app.name}" "${local.host_logs_directory}"
+    EOT
+  }
 }
