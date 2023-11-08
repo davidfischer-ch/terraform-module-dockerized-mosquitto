@@ -1,4 +1,4 @@
-resource "docker_container" "server" {
+resource "docker_container" "app" {
 
   lifecycle {
     replace_triggered_by = [
@@ -40,6 +40,8 @@ resource "docker_container" "server" {
     ip       = "0.0.0.0"
     protocol = "tcp"
   }
+
+  user = "${linux_user.app.name}:${linux_group.app.name}"
 
   volumes {
     container_path = "${local.container_config_directory}/mosquitto.conf"
