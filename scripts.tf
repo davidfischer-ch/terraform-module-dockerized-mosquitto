@@ -4,7 +4,7 @@ resource "local_file" "entrypoint" {
   directory_permission = "0755"
 
   content = <<EOT
-#!/bin/bash
+#!/bin/sh
 set -e
 
 echo "Generating password file"
