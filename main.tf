@@ -7,7 +7,7 @@ resource "docker_container" "app" {
     ]
   }
 
-  entrypoint = ["/bin/bash", "${local.container_config_directory}/entrypoint.sh"]
+  entrypoint = ["/bin/sh", "${local.container_config_directory}/entrypoint.sh"]
   image      = var.image_id
   name       = var.identifier
 
