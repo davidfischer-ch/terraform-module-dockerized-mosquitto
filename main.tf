@@ -3,7 +3,7 @@ resource "docker_container" "app" {
   lifecycle {
     replace_triggered_by = [
       local_file.entrypoint,
-      local_sensitive_file.main_config
+      local_file.main_config
     ]
   }
 
@@ -52,7 +52,7 @@ resource "docker_container" "app" {
 
   volumes {
     container_path = "${local.container_config_directory}/mosquitto.conf"
-    host_path      = local_sensitive_file.main_config.filename
+    host_path      = local_file.main_config.filename
     read_only      = true
   }
 

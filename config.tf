@@ -6,7 +6,7 @@ data "jinja_template" "main_config" {
   }
 }
 
-resource "local_sensitive_file" "main_config" {
+resource "local_file" "main_config" {
   filename             = "${local.host_config_directory}/mosquitto.conf"
   content              = data.jinja_template.main_config.result
   file_permission      = "0644"
