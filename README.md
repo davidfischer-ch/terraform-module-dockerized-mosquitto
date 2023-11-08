@@ -10,6 +10,4 @@ Manage Mosquitto server.
 
 TODO :
 
-- Automatic credentials if not provided
-- Port mapping?
-- Authentication
+https://github.com/eclipse/mosquitto/issues/1078

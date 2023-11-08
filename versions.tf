@@ -12,6 +12,11 @@ terraform {
       version = ">= 1.15.0"
     }
 
+    linux = {
+      source  = "mavidser/linux"
+      version = ">= 1.0.2"
+    }
+
     local = {
       source  = "hashicorp/local"
       version = ">= 2.4.0"

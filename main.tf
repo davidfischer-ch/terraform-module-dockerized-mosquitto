@@ -1,13 +1,16 @@
-resource "docker_container" "server" {
+resource "docker_container" "app" {
 
   lifecycle {
     replace_triggered_by = [
+      local_file.entrypoint,
       local_sensitive_file.main_config
     ]
   }
 
-  image = var.image_id
-  name  = var.identifier
+  entrypoint = ["/bin/sh", "${local.container_config_directory}/entrypoint.sh"]
+  command    = ["mosquitto", "-c", "${local.container_config_directory}/mosquitto.conf"]
+  image      = var.image_id
+  name       = var.identifier
 
   must_run = var.enabled
   start    = var.enabled
@@ -15,8 +18,6 @@ resource "docker_container" "server" {
   # wait   = true
 
   # shm_size = 256 # MB
-
-  # command = ["mosquitto", "-c", "${local.container_config_directory}/mosquitto.conf"]
 
   hostname = var.identifier
 
@@ -41,6 +42,14 @@ resource "docker_container" "server" {
     protocol = "tcp"
   }
 
+  user = linux_user.app.name
+
+  volumes {
+    container_path = "${local.container_config_directory}/entrypoint.sh"
+    host_path      = local_file.entrypoint.filename
+    read_only      = true
+  }
+
   volumes {
     container_path = "${local.container_config_directory}/mosquitto.conf"
     host_path      = local_sensitive_file.main_config.filename
@@ -57,5 +66,12 @@ resource "docker_container" "server" {
     container_path = local.container_logs_directory
     host_path      = local.host_logs_directory
     read_only      = false
+  }
+
+  provisioner "local-exec" {
+    command = <<EOT
+      chown "${linux_user.app.name}:${linux_group.app.name}" "${local.host_data_directory}"
+      chown "${linux_user.app.name}:${linux_group.app.name}" "${local.host_logs_directory}"
+    EOT
   }
 }

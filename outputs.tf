@@ -1,6 +1,14 @@
+output "app_user" {
+  value = linux_user.app
+}
+
+output "app_group" {
+  value = linux_group.app
+}
+
 output "host" {
   # Not the good host to communicate with
-  value = docker_container.server.hostname
+  value = docker_container.app.hostname
 }
 
 output "listener_port" {
