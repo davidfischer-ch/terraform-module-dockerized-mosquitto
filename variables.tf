@@ -22,6 +22,18 @@ variable "data_directory" {
   description = "Where data will be persisted (volumes will be mounted as sub-directories)."
 }
 
+# Daemon
+
+variable "app_user_id" {
+  type    = number
+  default = 1883
+}
+
+variable "app_group_id" {
+  type    = number
+  default = 1883
+}
+
 # Logging
 
 variable "log_types" {
