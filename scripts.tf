@@ -8,7 +8,7 @@ resource "local_file" "entrypoint" {
 set -e
 
 echo "Generating password file"
-mosquitto_passwd -b ${local.container_password_file} "${var.username}" "$PASSWORD"
+mosquitto_passwd -b -c ${local.container_password_file} "${var.username}" "$PASSWORD"
 echo "Starting server"
 exec "$@"
 EOT
