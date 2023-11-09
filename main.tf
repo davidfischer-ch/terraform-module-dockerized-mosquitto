@@ -25,8 +25,7 @@ resource "docker_container" "app" {
     name = var.network_id
   }
 
-  env = [
-  ]
+  env = formatlist("%s=%s", keys(local.env), values(local.env))
 
   ports {
     internal = "1883"
