@@ -22,7 +22,7 @@ variable "data_directory" {
   description = "Where data will be persisted (volumes will be mounted as sub-directories)."
 }
 
-# Daemon
+# Daemon -------------------------------------------------------------------------------------------
 
 variable "app_uid" {
   type    = number
@@ -34,7 +34,7 @@ variable "app_gid" {
   default = 1883
 }
 
-# Logging
+# Logging ------------------------------------------------------------------------------------------
 
 variable "log_types" {
   type    = list(string)
@@ -60,7 +60,7 @@ variable "log_types" {
   }
 }
 
-# Authentication
+# Authentication -----------------------------------------------------------------------------------
 
 variable "username" {
   type = string
@@ -71,7 +71,13 @@ variable "password" {
   sensitive = true
 }
 
-# Networking
+# Networking ---------------------------------------------------------------------------------------
+
+variable "hosts" {
+  type        = map(string)
+  default     = {}
+  description = "Add entries to container hosts file."
+}
 
 variable "network_id" {
   type        = string

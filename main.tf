@@ -19,13 +19,21 @@ resource "docker_container" "app" {
 
   # shm_size = 256 # MB
 
+  env = formatlist("%s=%s", keys(local.env), values(local.env))
+
+  dynamic "host" {
+    for_each = var.hosts
+    content {
+      host = host.key
+      ip   = host.value
+    }
+  }
+
   hostname = var.identifier
 
   networks_advanced {
     name = var.network_id
   }
-
-  env = formatlist("%s=%s", keys(local.env), values(local.env))
 
   ports {
     internal = "1883"
