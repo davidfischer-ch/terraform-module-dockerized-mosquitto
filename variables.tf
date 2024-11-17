@@ -12,6 +12,12 @@ variable "enabled" {
   description = "Toggle the containers (started or stopped)."
 }
 
+variable "wait" {
+  type        = bool
+  default     = true
+  description = "Wait for the container to reach an healthy state after creation."
+}
+
 variable "image_id" {
   type        = string
   description = "Mosquitto image's ID."

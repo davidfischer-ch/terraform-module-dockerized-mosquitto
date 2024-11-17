@@ -15,7 +15,7 @@ resource "docker_container" "app" {
   must_run = var.enabled
   start    = var.enabled
   restart  = "always"
-  # wait   = true
+  wait     = var.wait
 
   # shm_size = 256 # MB
 
