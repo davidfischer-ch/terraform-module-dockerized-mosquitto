@@ -14,7 +14,7 @@ variable "enabled" {
 
 variable "wait" {
   type        = bool
-  default     = true
+  default     = false
   description = "Wait for the container to reach an healthy state after creation."
 }
 
