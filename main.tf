@@ -51,24 +51,28 @@ resource "docker_container" "app" {
 
   user = linux_user.app.name
 
+  # Config owner root:root
   volumes {
     container_path = "${local.container_config_directory}/entrypoint.sh"
     host_path      = local_file.entrypoint.filename
     read_only      = true
   }
 
+  # Config owner root:root
   volumes {
     container_path = "${local.container_config_directory}/mosquitto.conf"
     host_path      = local_file.main_config.filename
     read_only      = true
   }
 
+  # Data owner app:app
   volumes {
     container_path = local.container_data_directory
     host_path      = local.host_data_directory
     read_only      = false
   }
 
+  # Logs owner app:app
   volumes {
     container_path = local.container_logs_directory
     host_path      = local.host_logs_directory
