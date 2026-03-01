@@ -35,6 +35,8 @@ resource "docker_container" "app" {
     name = var.network_id
   }
 
+  network_mode = "bridge"
+
   ports {
     internal = "1883"
     external = var.listener_port
