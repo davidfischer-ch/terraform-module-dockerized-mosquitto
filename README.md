@@ -48,6 +48,25 @@ data_directory/
 └── logs/    # Mosquitto log files
 ```
 
+## Changing `app_uid` / `app_gid`
+
+The `app_uid` and `app_gid` values are baked into three places:
+
+1. The Linux user/group created on the host (`linux_user` / `linux_group` resources).
+2. The `user` attribute of the container process.
+3. The `chown` provisioner that sets ownership of the data and logs directories.
+
+**Caveat — existing data directories**: The `chown` provisioner only runs on initial
+resource creation (or when `replace_triggered_by` fires). If you change `app_uid` /
+`app_gid` on an already-deployed instance, Terraform will recreate the Linux user and
+group but will **not** re-chown the data on disk. The container will then start as the
+new UID/GID but find files owned by the old one, causing permission errors.
+
+**Safe migration procedure**:
+1. Stop the container (`enabled = false`, `terraform apply`).
+2. Manually `chown -R <new_uid>:<new_gid>` the `data_directory` subtree on the host.
+3. Update `app_uid` / `app_gid` and re-enable (`enabled = true`, `terraform apply`).
+
 ## Variables
 
 | Name | Type | Default | Description |
@@ -57,8 +76,11 @@ data_directory/
 | `wait` | `bool` | `false` | Wait for the container to reach a healthy state after creation. |
 | `image_id` | `string` | — | [Mosquitto](https://hub.docker.com/_/eclipse-mosquitto/tags) Docker image's ID. |
 | `data_directory` | `string` | — | Host path for persistent volumes. |
-| `app_uid` | `number` | `1883` | UID for the daemon user. |
-| `app_gid` | `number` | `1883` | GID for the daemon group. |
+| `app_uid` | `number` | `1883` | UID of the user running the container and owning the data directories. |
+| `app_gid` | `number` | `1883` | GID of the user running the container and owning the data directories. |
+| `privileged` | `bool` | `false` | Run the container in privileged mode. |
+| `cap_add` | `set(string)` | `[]` | Linux capabilities to add to the container. |
+| `cap_drop` | `set(string)` | `[]` | Linux capabilities to drop from the container. |
 | `log_types` | `list(string)` | `["error", "warning", "notice", "information"]` | Log types to enable. |
 | `username` | `string` | — | MQTT authentication username. |
 | `password` | `string` | — | MQTT authentication password (sensitive). |

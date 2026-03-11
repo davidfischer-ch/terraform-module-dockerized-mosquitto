@@ -17,6 +17,16 @@ resource "docker_container" "app" {
   restart  = "always"
   wait     = var.wait
 
+  privileged = var.privileged
+
+  dynamic "capabilities" {
+    for_each = length(var.cap_add) + length(var.cap_drop) > 0 ? [1] : []
+    content {
+      add  = var.cap_add
+      drop = var.cap_drop
+    }
+  }
+
   # shm_size = 256 # MB
 
   env = formatlist("%s=%s", keys(local.env), values(local.env))
