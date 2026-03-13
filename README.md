@@ -14,7 +14,7 @@ See [examples/default](examples/default) for a complete working configuration.
 
 ```hcl
 module "mosquitto" {
-  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-mosquitto.git?ref=1.1.1"
+  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-mosquitto.git?ref=1.2.0"
 
   identifier = "mosquitto"
   image_id   = docker_image.mosquitto.image_id

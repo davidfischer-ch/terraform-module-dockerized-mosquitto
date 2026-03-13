@@ -1,5 +1,16 @@
 # Changelog
 
+## Release v1.2.0 (2026-03-14)
+
+### Minor compatibility breaks
+
+* Remove the `CAP_` prefix from `cap_add` and `cap_drop` values — the module now adds it automatically when calling the Docker provider
+
+### Fix and enhancements
+
+* Add validation of `cap_add` and `cap_drop` against the exhaustive list of Linux capabilities
+* Reorder variables to be consistent
+
 ## Release v1.1.1 (2026-03-13)
 
 ### Fix and enhancements
