@@ -16,19 +16,22 @@ See [examples/default](examples/default) for a complete working configuration.
 module "mosquitto" {
   source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-mosquitto.git?ref=1.1.1"
 
-  identifier     = "mosquitto"
-  image_id       = docker_image.mosquitto.image_id
+  identifier = "mosquitto"
+  image_id   = docker_image.mosquitto.image_id
+
+  # Networking
+
+  hosts      = { "myserver" = "10.0.0.1" }
+  network_id = docker_network.mosquitto.id
+
+  # Storage
+
   data_directory = "/data/mosquitto"
 
   # Authentication
 
   username = "mosquitto"
   password = random_password.mosquitto.result
-
-  # Networking
-
-  hosts      = { "myserver" = "10.0.0.1" }
-  network_id = docker_network.mosquitto.id
 }
 ```
 
@@ -70,19 +73,19 @@ new UID/GID but find files owned by the old one, causing permission errors.
 | `enabled` | `bool` | `true` | Start or stop the container. |
 | `wait` | `bool` | `true` | Wait for the container to reach a healthy state after creation. |
 | `image_id` | `string` | — | [Mosquitto](https://hub.docker.com/_/eclipse-mosquitto/tags) Docker image's ID. |
-| `data_directory` | `string` | — | Host path for persistent volumes. |
 | `app_uid` | `number` | `1883` | UID of the user running the container and owning the data directories. |
 | `app_gid` | `number` | `1883` | GID of the user running the container and owning the data directories. |
 | `privileged` | `bool` | `false` | Run the container in privileged mode. |
 | `cap_add` | `set(string)` | `[]` | Linux capabilities to add to the container. |
 | `cap_drop` | `set(string)` | `[]` | Linux capabilities to drop from the container. |
-| `log_types` | `list(string)` | `["error", "warning", "notice", "information"]` | Log types to enable. |
-| `username` | `string` | — | MQTT authentication username. |
-| `password` | `string` | — | MQTT authentication password (sensitive). |
 | `hosts` | `map(string)` | `{}` | Extra `/etc/hosts` entries for the container. |
 | `network_id` | `string` | — | Docker network to attach to. |
 | `listener_port` | `number` | `1883` | Host port for the MQTT listener. |
 | `websocket_port` | `number` | `9001` | Host port for the MQTT WebSocket. |
+| `data_directory` | `string` | — | Host path for persistent volumes. |
+| `log_types` | `list(string)` | `["error", "warning", "notice", "information"]` | Log types to enable. |
+| `username` | `string` | — | MQTT authentication username. |
+| `password` | `string` | — | MQTT authentication password (sensitive). |
 
 ## Outputs
 

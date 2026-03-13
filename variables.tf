@@ -25,11 +25,6 @@ variable "image_id" {
   description = "Mosquitto image's ID."
 }
 
-variable "data_directory" {
-  type        = string
-  description = "Where data will be persisted (volumes will be mounted as sub-directories)."
-}
-
 # Process ------------------------------------------------------------------------------------------
 
 variable "app_uid" {
@@ -60,6 +55,48 @@ variable "cap_drop" {
   type        = set(string)
   description = "Linux capabilities to drop from the container."
   default     = []
+}
+
+# Networking ---------------------------------------------------------------------------------------
+
+variable "hosts" {
+  type        = map(string)
+  description = "Add entries to container hosts file."
+  default     = {}
+}
+
+variable "network_id" {
+  type        = string
+  description = "Attach the containers to given network."
+}
+
+variable "listener_port" {
+  type        = number
+  description = "Bind the MQTT server's listener port."
+  default     = 1883
+
+  validation {
+    condition     = var.listener_port >= 1 && var.listener_port <= 65535
+    error_message = "Argument `listener_port` must be between 1 and 65535."
+  }
+}
+
+variable "websocket_port" {
+  type        = number
+  description = "Bind the MQTT server's websocket port."
+  default     = 9001
+
+  validation {
+    condition     = var.websocket_port >= 1 && var.websocket_port <= 65535
+    error_message = "Argument `websocket_port` must be between 1 and 65535."
+  }
+}
+
+# Storage ------------------------------------------------------------------------------------------
+
+variable "data_directory" {
+  type        = string
+  description = "Where data will be persisted (volumes will be mounted as sub-directories)."
 }
 
 # Logging ------------------------------------------------------------------------------------------
@@ -100,39 +137,4 @@ variable "password" {
   type        = string
   description = "MQTT authentication password."
   sensitive   = true
-}
-
-# Networking ---------------------------------------------------------------------------------------
-
-variable "hosts" {
-  type        = map(string)
-  description = "Add entries to container hosts file."
-  default     = {}
-}
-
-variable "network_id" {
-  type        = string
-  description = "Attach the containers to given network."
-}
-
-variable "listener_port" {
-  type        = number
-  description = "Bind the MQTT server's listener port."
-  default     = 1883
-
-  validation {
-    condition     = var.listener_port >= 1 && var.listener_port <= 65535
-    error_message = "Argument `listener_port` must be between 1 and 65535."
-  }
-}
-
-variable "websocket_port" {
-  type        = number
-  description = "Bind the MQTT server's websocket port."
-  default     = 9001
-
-  validation {
-    condition     = var.websocket_port >= 1 && var.websocket_port <= 65535
-    error_message = "Argument `websocket_port` must be between 1 and 65535."
-  }
 }

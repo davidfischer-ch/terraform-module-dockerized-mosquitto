@@ -16,12 +16,19 @@ resource "random_password" "mosquitto" {
 module "mosquitto" {
   source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-mosquitto.git?ref=1.1.0"
 
-  identifier     = "mosquitto"
-  image_id       = docker_image.mosquitto.image_id
+  identifier = "mosquitto"
+  image_id   = docker_image.mosquitto.image_id
+
+  # Networking
+
+  network_id = docker_network.mosquitto.id
+
+  # Storage
+
   data_directory = "/data/mosquitto"
+
+  # Authentication
 
   username = "mosquitto"
   password = random_password.mosquitto.result
-
-  network_id = docker_network.mosquitto.id
 }
