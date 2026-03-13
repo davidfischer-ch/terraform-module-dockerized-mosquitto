@@ -49,12 +49,20 @@ variable "cap_add" {
   type        = set(string)
   description = "Linux capabilities to add to the container."
   default     = []
+  validation {
+    condition = length(setsubtract(var.cap_add, local.linux_capabilities)) == 0
+    error_message = "Each entry in `cap_add` must be a valid Linux capability name."
+  }
 }
 
 variable "cap_drop" {
   type        = set(string)
   description = "Linux capabilities to drop from the container."
   default     = []
+  validation {
+    condition = length(setsubtract(var.cap_drop, local.linux_capabilities)) == 0
+    error_message = "Each entry in `cap_drop` must be a valid Linux capability name."
+  }
 }
 
 # Networking ---------------------------------------------------------------------------------------
