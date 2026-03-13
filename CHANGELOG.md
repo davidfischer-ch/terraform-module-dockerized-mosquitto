@@ -1,5 +1,13 @@
 # Changelog
 
+## Release v1.1.0 (2026-03-13)
+
+### Fix and enhancements
+
+* Add `# Process` section: `app_uid`, `app_gid`, `privileged`, `cap_add`, `cap_drop`
+  variables wired into the container via `user`, `privileged`, and a dynamic `capabilities` block
+* Add `examples/default/` Terraform example
+
 ## Release v1.0.1 (2026-01-03)
 
 ### Fix and enhancements
