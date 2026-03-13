@@ -17,11 +17,8 @@ module "mosquitto" {
   source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-mosquitto.git?ref=1.1.0"
 
   identifier     = "mosquitto"
-  enabled        = true
   image_id       = docker_image.mosquitto.image_id
   data_directory = "/data/mosquitto"
-
-  log_types = ["error", "warning", "notice", "information"]
 
   username = "mosquitto"
   password = random_password.mosquitto.result
