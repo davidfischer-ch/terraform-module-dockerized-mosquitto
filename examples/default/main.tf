@@ -14,7 +14,7 @@ resource "random_password" "mosquitto" {
 }
 
 module "mosquitto" {
-  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-mosquitto.git?ref=1.0.1"
+  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-mosquitto.git?ref=1.1.0"
 
   identifier     = "mosquitto"
   enabled        = true
