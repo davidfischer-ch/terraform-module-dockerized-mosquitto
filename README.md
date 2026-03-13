@@ -72,8 +72,8 @@ new UID/GID but find files owned by the old one, causing permission errors.
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | `identifier` | `string` | — | Unique name for resources (must match `^[a-z]+(-[a-z0-9]+)*$`). |
-| `enabled` | `bool` | — | Start or stop the container. |
-| `wait` | `bool` | `false` | Wait for the container to reach a healthy state after creation. |
+| `enabled` | `bool` | `true` | Start or stop the container. |
+| `wait` | `bool` | `true` | Wait for the container to reach a healthy state after creation. |
 | `image_id` | `string` | — | [Mosquitto](https://hub.docker.com/_/eclipse-mosquitto/tags) Docker image's ID. |
 | `data_directory` | `string` | — | Host path for persistent volumes. |
 | `app_uid` | `number` | `1883` | UID of the user running the container and owning the data directories. |
