@@ -1,29 +1,35 @@
 output "app_user" {
-  value = linux_user.app
+  description = "Linux user running the Mosquitto container."
+  value       = linux_user.app
 }
 
 output "app_group" {
-  value = linux_group.app
+  description = "Linux group of the Mosquitto container."
+  value       = linux_group.app
 }
 
 output "host" {
-  # Not the good host to communicate with
-  value = docker_container.app.hostname
+  description = "Hostname of the Mosquitto container."
+  value       = docker_container.app.hostname
 }
 
 output "listener_port" {
-  value = var.listener_port
+  description = "MQTT listener port."
+  value       = var.listener_port
 }
 
 output "websocket_port" {
-  value = var.websocket_port
+  description = "WebSocket listener port."
+  value       = var.websocket_port
 }
 
 output "username" {
-  value = var.username
+  description = "MQTT client username."
+  value       = var.username
 }
 
 output "password" {
-  value     = var.password
-  sensitive = true
+  description = "MQTT client password."
+  sensitive   = true
+  value       = var.password
 }

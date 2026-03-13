@@ -1,6 +1,7 @@
 variable "identifier" {
   type        = string
   description = "Identifier (must be unique, used to name resources)."
+
   validation {
     condition     = regex("^[a-z]+(-[a-z0-9]+)*$", var.identifier) != null
     error_message = "Argument `identifier` must match regex ^[a-z]+(-[a-z0-9]+)*$."
@@ -9,14 +10,14 @@ variable "identifier" {
 
 variable "enabled" {
   type        = bool
-  default     = true
   description = "Toggle the containers (started or stopped)."
+  default     = true
 }
 
 variable "wait" {
   type        = bool
-  default     = true
   description = "Wait for the container to reach an healthy state after creation."
+  default     = true
 }
 
 variable "image_id" {
@@ -33,39 +34,40 @@ variable "data_directory" {
 
 variable "app_uid" {
   type        = number
-  default     = 1883
   description = "UID of the user running the container and owning the data directories."
+  default     = 1883
 }
 
 variable "app_gid" {
   type        = number
-  default     = 1883
   description = "GID of the user running the container and owning the data directories."
+  default     = 1883
 }
 
 variable "privileged" {
   type        = bool
-  default     = false
   description = "Run the container in privileged mode."
+  default     = false
 }
 
 variable "cap_add" {
   type        = set(string)
-  default     = []
   description = "Linux capabilities to add to the container."
+  default     = []
 }
 
 variable "cap_drop" {
   type        = set(string)
-  default     = []
   description = "Linux capabilities to drop from the container."
+  default     = []
 }
 
 # Logging ------------------------------------------------------------------------------------------
 
 variable "log_types" {
-  type    = list(string)
-  default = ["error", "warning", "notice", "information"]
+  type        = list(string)
+  description = "Log types to enable (debug, error, warning, notice, information, subscribe, unsubscribe, websockets, none, all)."
+  default     = ["error", "warning", "notice", "information"]
 
   validation {
     condition = length(var.log_types) >= 1 && length(setsubtract(
@@ -96,16 +98,16 @@ variable "username" {
 
 variable "password" {
   type        = string
-  sensitive   = true
   description = "MQTT authentication password."
+  sensitive   = true
 }
 
 # Networking ---------------------------------------------------------------------------------------
 
 variable "hosts" {
   type        = map(string)
-  default     = {}
   description = "Add entries to container hosts file."
+  default     = {}
 }
 
 variable "network_id" {
@@ -115,12 +117,22 @@ variable "network_id" {
 
 variable "listener_port" {
   type        = number
-  default     = 1883
   description = "Bind the MQTT server's listener port."
+  default     = 1883
+
+  validation {
+    condition     = var.listener_port >= 1 && var.listener_port <= 65535
+    error_message = "Argument `listener_port` must be between 1 and 65535."
+  }
 }
 
 variable "websocket_port" {
   type        = number
-  default     = 9001
   description = "Bind the MQTT server's websocket port."
+  default     = 9001
+
+  validation {
+    condition     = var.websocket_port >= 1 && var.websocket_port <= 65535
+    error_message = "Argument `websocket_port` must be between 1 and 65535."
+  }
 }
