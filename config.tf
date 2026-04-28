@@ -1,5 +1,8 @@
 data "jinja_template" "main_config" {
-  template = "${path.module}/config/mosquitto.conf.j2"
+  source {
+    directory = path.module
+    template  = file("${path.module}/config/mosquitto.conf.j2")
+  }
   context {
     type = "json"
     data = jsonencode(local.forced_context)
