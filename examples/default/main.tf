@@ -14,7 +14,7 @@ resource "random_password" "mosquitto" {
 }
 
 module "mosquitto" {
-  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-mosquitto.git?ref=1.2.0"
+  source = "git::https://github.com/davidfischer-ch/terraform-module-dockerized-mosquitto.git?ref=1.3.0"
 
   identifier = "mosquitto"
   image_id   = docker_image.mosquitto.image_id

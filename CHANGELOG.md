@@ -1,5 +1,15 @@
 # Changelog
 
+## Release v1.3.0 (2026-04-28)
+
+### Minor compatibility breaks
+
+* Bump minimum `NikolaLohinski/jinja` provider version from `1.17.0` to `2.0.0`. Consumers must run `terraform init -upgrade` to refresh the provider.
+
+### Fix and enhancements
+
+* Migrate `jinja_template` data source from deprecated `template` attribute to `source` block
+
 ## Release v1.2.0 (2026-03-14)
 
 ### Minor compatibility breaks
