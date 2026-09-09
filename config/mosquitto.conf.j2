@@ -4,6 +4,30 @@ persistence_location {{ data_directory }}
 log_dest file {{ logs_directory }}/mosquitto.log
 log_type {{ log_types|join(' ') }}
 
+{% if plaintext_enabled %}
 listener 1883
+allow_anonymous {{ 'true' if anonymous else 'false' }}
 password_file {{ password_file }}
-# acl_file {{ config_directory }}/mosquitto.aclfile
+acl_file {{ acl_file }}
+{% endif %}
+{% if tls_enabled %}
+
+listener 8883
+allow_anonymous {{ 'true' if anonymous else 'false' }}
+password_file {{ password_file }}
+acl_file {{ acl_file }}
+certfile {{ tls_cert_file }}
+keyfile {{ tls_key_file }}
+# Clients prove who they are with a password, not a certificate, and use TLS to know they are
+# talking to this broker and to keep that password off the wire.
+require_certificate false
+tls_version tlsv1.2
+{% endif %}
+{% if websocket_enabled %}
+
+listener 9001
+protocol websockets
+allow_anonymous {{ 'true' if anonymous else 'false' }}
+password_file {{ password_file }}
+acl_file {{ acl_file }}
+{% endif %}
