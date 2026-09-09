@@ -1,5 +1,25 @@
 # Changelog
 
+## Release v1.4.0 (2026-09-09)
+
+### Minor compatibility breaks
+
+* Bind published ports to `127.0.0.1` instead of `0.0.0.0`: set `listener_address = "0.0.0.0"` to keep offering the broker to the network
+* Stop publishing the websocket port unless `websocket_enabled` is set
+
+### Features
+
+* Add `accounts`, one entry per client carrying its own password and its own readable and writable topic patterns, rendered into a mosquitto ACL file
+* Add `tls_enabled`, serving `ssl_crt` and `ssl_key` on `tls_listener_port`, off by default since the module cannot invent a certificate
+* Add `network_aliases`, so a client sharing the broker's network resolves it by name rather than by a container address that changes
+* Add `websocket_enabled`, which gates the websocket listener and its published port
+* Add `anonymous`, off, deciding whether unauthenticated clients are accepted
+* Add a healthcheck on the listener, with `healthcheck_enabled`, `healthcheck_interval`, `healthcheck_timeout`, `healthcheck_retries` and `healthcheck_start_period`
+
+### Fix and enhancements
+
+* Fail an apply that sets `wait` without a healthcheck, instead of reporting success over a broker in a restart loop
+
 ## Release v1.3.0 (2026-04-28)
 
 ### Minor compatibility breaks
