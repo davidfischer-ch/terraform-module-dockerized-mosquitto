@@ -172,10 +172,15 @@ variable "tls_enabled" {
   description = <<-EOT
     Whether to serve TLS on `tls_listener_port`, from the certificate given as `ssl_crt`.
 
-    Without it a password crosses the network in the clear on every connect, and whoever reads one
-    can publish as that client from then on.
+    Worth turning on: without it a password crosses the network in the clear on every connect, and
+    whoever reads one can publish as that client from then on.
+
+    Off by default all the same, because it is the one setting here that cannot be defaulted safely
+    either way. On, the module refuses to start until it is handed a certificate and a key, which
+    it has no way to invent; a broker nobody can bring up is worse than one somebody must remember
+    to encrypt.
   EOT
-  default     = true
+  default     = false
 }
 
 variable "tls_listener_port" {
